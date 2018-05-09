@@ -11,12 +11,11 @@ import Typography from 'material-ui/Typography';
 // container component
 
 interface OwnProps {
-
 }
 
-type HeaderProps = OwnProps
+type Props = OwnProps
 
-export const HeaderComponent: React.SFC<HeaderProps> = (props) => {
+export const Component: React.SFC<Props> = (props) => {
     return (
         <AppBar style={{position: 'static'}}>
            <Toolbar>
@@ -39,4 +38,4 @@ function mapDispatchToProps(dispatch: Dispatch<void>) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(Component)
