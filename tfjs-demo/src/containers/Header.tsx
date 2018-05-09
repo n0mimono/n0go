@@ -20,7 +20,7 @@ export const Component: React.SFC<Props> = (props) => {
         <AppBar style={{position: 'static'}}>
            <Toolbar>
                 <Typography variant="title" color="inherit">
-                    TensorFlow.js
+                    Demo: TensorFlow.js
                 </Typography>
             </Toolbar>
         </AppBar>
