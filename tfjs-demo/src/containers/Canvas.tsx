@@ -8,6 +8,7 @@ import * as Canvas from '../modules/canvas'
 import * as tf from '@tensorflow/tfjs'
 
 import * as p from './CanvasPresenter'
+import { on } from 'cluster';
 
 // container component
 
@@ -50,33 +51,42 @@ function mapDispatchToProps(dispatch: Dispatch<void>) {
     return {
         init: (canvas: HTMLCanvasElement) => {
             let ctx = canvas.getContext('2d')
-            let onStart = (e: MouseEvent) => {
-                //console.log(e.type)
-                e.preventDefault()
+
+            let onStart = (x: number, y: number) => {
                 ctx.beginPath()
-                ctx.moveTo(e.layerX, e.layerY)
+                ctx.moveTo(x, y)
             }
-            let onMove = (e: MouseEvent) => {
-                //console.log(e.type + " > " + e.x + ", " + e.layerX)
-                if (e.buttons == 1 || e.type == "touchmove") {
-                    //e.preventDefault()
-                    ctx.lineTo(e.layerX, e.layerY)
-                    ctx.lineCap = "round"
-                    ctx.lineWidth = Canvas.Line()
-                    ctx.strokeStyle = Canvas.Color
-                    ctx.stroke()
-                }
+            let onMove = (x: number, y: number) => {
+                ctx.lineTo(x, y)
+                ctx.lineCap = "round"
+                ctx.lineWidth = Canvas.Line()
+                ctx.strokeStyle = Canvas.Color
+                ctx.stroke()
             }
-            let onEnd = (e: MouseEvent) => {
-                //console.log(e.type)
+            let onEnd = () => {
             }
 
-            canvas.addEventListener("mousedown", onStart, false)
-            canvas.addEventListener("mousemove", onMove, false)
-            canvas.addEventListener("mouseup", onEnd, false)
-            canvas.addEventListener("touchstart", onStart, false)
-            canvas.addEventListener("touchmove", onMove, false)
-            canvas.addEventListener("touchend", onEnd, false)
+            canvas.addEventListener("mousedown", e => {
+                e.preventDefault()
+                onStart(e.layerX, e.layerY)
+            }, false)
+            canvas.addEventListener("mousemove", e => {
+                if (e.buttons == 1) {
+                    onMove(e.layerX, e.layerY)
+                }
+            }, false)
+            canvas.addEventListener("mouseup", e => onEnd(), false)
+
+            canvas.addEventListener("touchstart", e => {
+                e.preventDefault()
+                let rect = canvas.getBoundingClientRect()
+                onStart(e.touches[0].clientX - rect.left, e.touches[0].clientY  - rect.top)
+            }, false)
+            canvas.addEventListener("touchmove", e => {
+                let rect = canvas.getBoundingClientRect()
+                onMove(e.touches[0].clientX - rect.left, e.touches[0].clientY  - rect.top)
+            }, false)
+            canvas.addEventListener("touchend", e => onEnd(), false)
 
             tf.loadModel('/model/model.json')
                 .then(m => dispatch(Canvas.actions.init(m)))
