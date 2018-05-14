@@ -52,12 +52,11 @@ function mapDispatchToProps(dispatch: Dispatch<void>) {
             let ctx = canvas.getContext('2d')
             let onStart = (e: MouseEvent) => {
                 e.preventDefault()
-
                 ctx.beginPath()
                 ctx.moveTo(e.layerX, e.layerY)
             }
             let onMove = (e: MouseEvent) => {
-                if (e.buttons == 1 || e.type == "touch") {
+                if (e.buttons == 1 || e.type == "touchmove") {
                     ctx.lineTo(e.layerX, e.layerY)
                     ctx.lineCap = "round"
                     ctx.lineWidth = Canvas.Line()
