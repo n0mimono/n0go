@@ -51,12 +51,15 @@ function mapDispatchToProps(dispatch: Dispatch<void>) {
         init: (canvas: HTMLCanvasElement) => {
             let ctx = canvas.getContext('2d')
             let onStart = (e: MouseEvent) => {
+                //console.log(e.type)
                 e.preventDefault()
                 ctx.beginPath()
                 ctx.moveTo(e.layerX, e.layerY)
             }
             let onMove = (e: MouseEvent) => {
+                //console.log(e.type + " > " + e.x + ", " + e.layerX)
                 if (e.buttons == 1 || e.type == "touchmove") {
+                    //e.preventDefault()
                     ctx.lineTo(e.layerX, e.layerY)
                     ctx.lineCap = "round"
                     ctx.lineWidth = Canvas.Line()
@@ -65,14 +68,15 @@ function mapDispatchToProps(dispatch: Dispatch<void>) {
                 }
             }
             let onEnd = (e: MouseEvent) => {
+                //console.log(e.type)
             }
 
             canvas.addEventListener("mousedown", onStart, false)
             canvas.addEventListener("mousemove", onMove, false)
             canvas.addEventListener("mouseup", onEnd, false)
-            canvas.addEventListener("touchdown", onStart, false)
+            canvas.addEventListener("touchstart", onStart, false)
             canvas.addEventListener("touchmove", onMove, false)
-            canvas.addEventListener("touchup", onEnd, false)
+            canvas.addEventListener("touchend", onEnd, false)
 
             tf.loadModel('/model/model.json')
                 .then(m => dispatch(Canvas.actions.init(m)))
