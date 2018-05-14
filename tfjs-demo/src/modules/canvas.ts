@@ -5,11 +5,19 @@ import { loadModel } from '@tensorflow/tfjs';
 
 import * as tf from '@tensorflow/tfjs'
 
+import { isSp } from '../modules/utils'
+
 // constants
 
-export const Width = 300
-export const Height = 300
-export const Line = 15
+export const BaseWidth = 300
+export const BaseHeight = 300
+export const BaseLine = 15
+
+export const Rate = () => isSp() ? window.innerWidth / BaseWidth * 0.85 : 1
+export const Width = () => Rate() * BaseWidth
+export const Height = () => Rate() * BaseHeight
+export const Line = () => Rate() * BaseLine
+
 export const Color = "#FFF"
 export const Back = "#000"
 export const InputWidth = 28

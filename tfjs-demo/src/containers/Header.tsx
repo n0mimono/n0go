@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 
 import { AppState } from '../store'
 
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
+import * as p from './HeaderPresenter'
 
 // container component
 
@@ -17,14 +15,8 @@ type Props = OwnProps
 
 export const Component: React.SFC<Props> = (props) => {
     return (
-        <AppBar style={{position: 'static', background: "#333"}}>
-           <Toolbar>
-                <Typography variant="title" color="inherit">
-                    Demo: TensorFlow.js
-                </Typography>
-            </Toolbar>
-        </AppBar>
-    )
+        <p.HeaderPresenter />
+    )    
 }
 
 // connect
