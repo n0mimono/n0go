@@ -72,7 +72,7 @@ interface PredictBtnProps {
 
 const PredictBtn: React.SFC<PredictBtnProps> = (props) => {
     return (
-        <Button disabled={props.disabled} variant="raised" color="primary" onClick={_ => props.onClick()}>
+        <Button disabled={props.disabled} variant="raised" color="secondary" onClick={_ => props.onClick()}>
             {props.disabled ? "Loading.." : "Prediction"}
         </Button>
     )
@@ -107,7 +107,7 @@ const Result: React.SFC<ResultProps> = (props) => {
                     let rows = []
                     for (let i = 0; i < 10; i++) {
                         rows.push(
-                            <tr style={props.index == i ? { color: "#F44" } : { color: "#666" }}>
+                            <tr style={props.index == i ? { color: "#F28" } : { color: "#666" }}>
                                 <th>{i}</th>
                                 <td>{props.scores.length > 0 ? props.scores[i] : "-"}</td>
                             </tr>

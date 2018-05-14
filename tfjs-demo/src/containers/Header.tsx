@@ -17,7 +17,7 @@ type Props = OwnProps
 
 export const Component: React.SFC<Props> = (props) => {
     return (
-        <AppBar style={{position: 'static'}}>
+        <AppBar style={{position: 'static', background: "#333"}}>
            <Toolbar>
                 <Typography variant="title" color="inherit">
                     Demo: TensorFlow.js
