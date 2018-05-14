@@ -28,25 +28,48 @@ export class Component extends React.Component<Props> {
     render() {
         let props = this.props
         return (
-            <div style={{ display: "flex" }}>
-                <div style={{ padding: "20px" }}>
-                    <div>
-                        <Drawer width={Canvas.Width} height={Canvas.Height} onRef={c => this.canvas = c} />
-                        <div style={{ padding: "10px 0px" }}>
-                            <PredictBtn
-                                disabled={!props.isModelLoaded}
-                                onClick={() => props.predict({ canvas: this.canvas, model: props.model })}
-                            />
-                            <ResetBtn onClick={() => props.reset(this.canvas)} />
-                        </div>
-                    </div>
-                </div>
-                <div style={{ padding: "20px 10px" }}>
-                    <Result index={props.estimated} scores={props.scores} />
-                </div>
-            </div>
+            <CanvasPresenter
+                predictDisabled={!props.isModelLoaded}
+                onPredict={() => props.predict({ canvas: this.canvas, model: props.model })}
+                onReset={() => props.reset(this.canvas)}
+                estimated={props.estimated}
+                scores={props.scores}
+                onRef={c => this.canvas = c}
+            />
         )
     }
+}
+
+interface CanvasPresenterProps {
+    predictDisabled: boolean
+    onPredict: () => void
+    onReset: () => void
+    estimated: number
+    scores: number[]
+    onRef: (c: HTMLCanvasElement) => void
+}
+
+const CanvasPresenter: React.SFC<CanvasPresenterProps> = (props) => {
+    return (
+        <div style={{ display: "flex" }}>
+        <div style={{ padding: "20px" }}>
+            <div>
+                <Drawer width={Canvas.Width} height={Canvas.Height} onRef={props.onRef} />
+                <div style={{ padding: "10px 0px" }}>
+                    <PredictBtn
+                        disabled={props.predictDisabled}
+                        onClick={props.onPredict}
+                    />
+                    <ResetBtn onClick={props.onReset} />
+                </div>
+            </div>
+        </div>
+        <div style={{ padding: "20px 10px" }}>
+            <Result index={props.estimated} scores={props.scores} />
+        </div>
+    </div>
+
+    )
 }
 
 interface DrawerProps {
