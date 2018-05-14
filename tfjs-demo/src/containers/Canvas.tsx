@@ -8,7 +8,6 @@ import * as Canvas from '../modules/canvas'
 import * as tf from '@tensorflow/tfjs'
 
 import * as p from './CanvasPresenter'
-import { on } from 'cluster';
 
 // container component
 

@@ -12,9 +12,9 @@ interface HeaderPresenterProps {
 export const HeaderPresenter: React.SFC<HeaderPresenterProps> = (props) => {
     return (
         <AppBar style={{position: 'static', background: "#333"}}>
-           <Toolbar>
-                <Typography variant="title" color="inherit"
-                    style={isSp() ? { fontSize: "8vw" } : {}}
+           <Toolbar style={{ display: "flex", justifyContent: "center" }}>
+                <Typography variant="title" color="inherit" align="center"
+                    style={isSp() ? { fontSize: "7vw", padding: "3vw 3vw" } : {}}
                 >
                     Demo: TensorFlow.js
                 </Typography>

@@ -19,27 +19,29 @@ interface CanvasPresenterProps {
 export const CanvasPresenter: React.SFC<CanvasPresenterProps> = (props) => {
     if (isSp()) {
         return (
-        <Grid>
-            <Grid container justify={"center"} >
-                <Grid style={{ padding: "2vw 2vw" }}>
-                    <Grid item xs={12}>
+        <div>
+            <div style={{ display: "flex", justifyContent: "center" }} >
+                <div>
+                    <div style={{ padding: "4vw 2vw" }}>
                         <Drawer width={props.width} height={props.height} onRef={props.onRef} />
-                    </Grid>
-                    <Grid item xs={12} style={{ padding: "1vw 0vw" }}>
+                    </div>
+                    <div style={{ padding: "0vw 0vw", display: "flex" }}>
+                        <div style={{ padding: "0vw 2vw" }}>
                         <PredictBtn
                             disabled={props.predictDisabled}
                             onClick={props.onPredict}
                         />
+                        </div>
+                        <div style={{ padding: "0vw 2vw" }}>
                         <ResetBtn onClick={props.onReset} />
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid style={{ padding: "2vw 6vw" }}>
-                <Grid item xs={12}>
-                    <Result index={props.estimated} scores={props.scores} />
-                </Grid>
-            </Grid>
-        </Grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style={{ padding: "6vw 6.5vw" }}>
+                <Result index={props.estimated} scores={props.scores} />
+            </div>
+        </div>
         )
     } else {
         return (
@@ -89,7 +91,7 @@ interface PredictBtnProps {
 const PredictBtn: React.SFC<PredictBtnProps> = (props) => {
     return (
         <Button disabled={props.disabled} variant="raised" color="secondary" onClick={_ => props.onClick()}
-            style={isSp() ? { fontSize: "6vw" } : {}}
+            style={isSp() ? { fontSize: "5vw", padding: "2vw" } : {}}
         >{props.disabled ? "Loading.." : "Prediction"}
         </Button>
     )
@@ -102,7 +104,7 @@ interface ResetBtnProps {
 const ResetBtn: React.SFC<ResetBtnProps> = (props) => {
     return (
         <Button variant="raised" onClick={_ => props.onClick()}
-            style={isSp() ? { fontSize: "6vw" } : {}}
+            style={isSp() ? { fontSize: "5vw", padding: "2vw" } : {}}
         >Reset</Button>
     )
 }
